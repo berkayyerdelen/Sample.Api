@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sample.Core.Common;
+using Sample.Core.Domain.Product.Commands.DeleteProduct;
 using Sample.Core.Domain.Product.Queries.GetProducts;
 using Sample.Infrastructure;
 
@@ -36,7 +38,15 @@ namespace Sample.Api
             services.AddScoped<IApplicationDbContext>(x => x.GetService<ApplicationContext>());
 
             services.AddMediatR(typeof(GetProductsRequestHandler));
+            services.AddMediatR(typeof(DeleteProductRequestHandler));
 
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddControllers();
         }
 
