@@ -32,7 +32,7 @@ namespace Sample.Api.Controllers
 
         // GET: api/Product/5
         [HttpDelete]
-        public async Task<Unit> DeleteProduct(DeleteProductRequest request, CancellationToken ct)
+        public async Task<BaseResponseDto<bool>> DeleteProduct(DeleteProductRequest request, CancellationToken ct)
         {
             return await _mediator.Send(request, ct);
         }
