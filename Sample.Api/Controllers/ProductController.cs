@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sample.Core.Common.BaseDto;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
 using Sample.Core.Domain.Product.Queries.GetProducts;
 using Sample.Core.Domain.Product.Queries.GetProducts.Dto;
@@ -24,7 +25,7 @@ namespace Sample.Api.Controllers
         }
         // GET: api/Product
         [HttpGet]
-        public async Task<List<ProductDto>> GetProducts(CancellationToken ct)
+        public async Task<BaseResponseDto<List<ProductDto>>> GetProducts(CancellationToken ct)
         {
            return await _mediator.Send(new GetProductsRequest(), ct);
         }
