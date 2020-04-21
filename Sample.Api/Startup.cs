@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sample.Core.Common;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
+using Sample.Core.Domain.Product.Commands.UpsertProduct;
+using Sample.Core.Domain.Product.Queries.GetProductByName;
 using Sample.Core.Domain.Product.Queries.GetProducts;
 using Sample.Infrastructure;
 
@@ -39,6 +41,8 @@ namespace Sample.Api
 
             services.AddMediatR(typeof(GetProductsRequestHandler));
             services.AddMediatR(typeof(DeleteProductRequestHandler));
+            services.AddMediatR(typeof(UpsertProductRequestHandler));
+            services.AddMediatR(typeof(GetProductByNameRequestHandler));
 
             var mappingConfig = new MapperConfiguration(mc =>
             {

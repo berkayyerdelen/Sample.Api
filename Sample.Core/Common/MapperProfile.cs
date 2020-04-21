@@ -7,11 +7,15 @@ using Sample.Domain;
 
 namespace Sample.Core.Common
 {
-    public class MapperProfile:Profile
+    public class MapperProfile : Profile
     {
         public MapperProfile()
         {
-            CreateMap<ProductDto, Product>().ReverseMap();
+            CreateMap<ProductDto, Product>();
+
+            CreateMap<Product, ProductDto>();
+
+            CreateMap<Product, Sample.Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>();
         }
     }
 }

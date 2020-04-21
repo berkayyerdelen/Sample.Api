@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sample.Core.Common.BaseDto;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
 using Sample.Core.Domain.Product.Commands.UpsertProduct;
+using Sample.Core.Domain.Product.Queries.GetProductByName;
 using Sample.Core.Domain.Product.Queries.GetProducts;
 using Sample.Core.Domain.Product.Queries.GetProducts.Dto;
 
@@ -28,7 +29,7 @@ namespace Sample.Api.Controllers
         [HttpGet]
         public async Task<BaseResponseDto<List<ProductDto>>> GetProducts(CancellationToken ct)
         {
-           return await _mediator.Send(new GetProductsRequest(), ct);
+            return await _mediator.Send(new GetProductsRequest(), ct);
         }
 
         // GET: api/Product/5
@@ -52,9 +53,10 @@ namespace Sample.Api.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet("{productName}")]
+        public async Task<BaseResponseDto<Sample.Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>> GetProductByName(string productName)
         {
+            return await _mediator.Send(new GetProductByNameRequest(productName));
         }
     }
 }
