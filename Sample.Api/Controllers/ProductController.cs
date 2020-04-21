@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sample.Core.Common.BaseDto;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
+using Sample.Core.Domain.Product.Commands.UpsertProduct;
 using Sample.Core.Domain.Product.Queries.GetProducts;
 using Sample.Core.Domain.Product.Queries.GetProducts.Dto;
 
@@ -39,8 +40,9 @@ namespace Sample.Api.Controllers
 
         // POST: api/Product
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<BaseResponseDto<bool>> UpsertProduct(UpsertProductRequest request, CancellationToken ct)
         {
+            return await _mediator.Send(request, ct);
         }
 
         // PUT: api/Product/5

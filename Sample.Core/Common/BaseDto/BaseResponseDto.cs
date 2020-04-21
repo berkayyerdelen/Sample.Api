@@ -15,5 +15,6 @@ namespace Sample.Core.Common.BaseDto
         public List<string> Errors { get; set; }
         public int Total { get; set; }
         public TData Data { get; set; }
+      
     }
 }

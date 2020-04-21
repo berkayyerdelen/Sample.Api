@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Sample.Core.Common;
 using Sample.Core.Common.BaseDto;
 
@@ -12,10 +13,12 @@ namespace Sample.Core.Domain.Product.Commands.DeleteProduct
     public class DeleteProductRequestHandler:IRequestHandler<DeleteProductRequest,BaseResponseDto<bool>>
     {
         private readonly IApplicationDbContext _context;
+        private readonly ILogger<DeleteProductRequestHandler> _logger;
 
-        public DeleteProductRequestHandler(IApplicationDbContext context)
+        public DeleteProductRequestHandler(IApplicationDbContext context, ILogger<DeleteProductRequestHandler> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<BaseResponseDto<bool>> Handle(DeleteProductRequest request, CancellationToken cancellationToken)
@@ -28,11 +31,11 @@ namespace Sample.Core.Domain.Product.Commands.DeleteProduct
                 await _context.SaveChangesAsync(cancellationToken);
                 response.Data = true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                _logger.LogError(ex,ex.Message);
                 response.Data = false;
-                Console.WriteLine(e);
-                throw;
+                
             }
 
             return response;
