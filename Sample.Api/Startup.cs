@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,8 +17,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Sample.Core.Common;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
+using Sample.Core.Domain.Product.Commands.DeleteProduct.Validator;
 using Sample.Core.Domain.Product.Commands.UpsertProduct;
+using Sample.Core.Domain.Product.Commands.UpsertProduct.Validator;
 using Sample.Core.Domain.Product.Queries.GetProductByName;
+using Sample.Core.Domain.Product.Queries.GetProductByName.Validator;
 using Sample.Core.Domain.Product.Queries.GetProducts;
 using Sample.Infrastructure;
 
@@ -38,6 +43,12 @@ namespace Sample.Api
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
 
             services.AddScoped<IApplicationDbContext>(x => x.GetService<ApplicationContext>());
+
+            services.AddMvc().AddFluentValidation();
+
+            services.AddTransient<IValidator<DeleteProductRequest>, DeleteProductValidator>();
+            services.AddTransient<IValidator<UpsertProductRequest>, UpsertProductValidator>();
+            services.AddTransient<IValidator<GetProductByNameRequest>, GetProductByNameValidator>();
 
             services.AddMediatR(typeof(GetProductsRequestHandler));
             services.AddMediatR(typeof(DeleteProductRequestHandler));
