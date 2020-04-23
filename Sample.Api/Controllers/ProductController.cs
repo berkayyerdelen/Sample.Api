@@ -53,7 +53,8 @@ namespace Sample.Api.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpGet("{productName}")]
+        [HttpGet]
+        [Route("findbyname/{productName}")]
         public async Task<BaseResponseDto<Sample.Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>> GetProductByName(string productName)
         {
             return await _mediator.Send(new GetProductByNameRequest(productName));
