@@ -27,25 +27,54 @@ namespace Sample.Api.Controllers
         {
             _mediator = mediator;
         }
-        // GET: api/Product
+        /// <summary>
+        /// GET: api/v1.0/product
+        /// </summary>
+        /// Get product list
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<BaseResponseDto<List<ProductDto>>> GetProducts(CancellationToken ct)
-        {
-            return await _mediator.Send(new GetProductsRequest(), ct);
+        [ProducesResponseType(typeof(BaseResponseDto<List<ProductDto>>), 200)]
+        public async Task<IActionResult> Get(CancellationToken ct)
+        {           
+                var query = await _mediator.Send(new GetProductsRequest(), ct).ConfigureAwait(false);
+                if (query.Data == null)               
+                    return NotFound<object>("Products couldnt list", null, null);               
+                return Success("Products listed.", null, query);
+                               
         }
 
-        // GET: api/Product/5
-        [HttpDelete]
-        public async Task<BaseResponseDto<bool>> DeleteProduct(DeleteProductRequest request, CancellationToken ct)
+        /// <summary>
+        /// Delete: api/v1.0/product
+        /// </summary>
+        /// Delete product by id
+        /// <param name="request"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        [HttpDelete]       
+        public async Task<IActionResult> DeleteProduct(DeleteProductRequest request, CancellationToken ct)
         {
-            return await _mediator.Send(request, ct);
+            var query = await _mediator.Send(request, ct);
+            if (query.Data == false)
+                return Error("Product could could not deleted",null,query);
+            return Success("Product is deleted", null, query);
         }
-
-        // POST: api/Product
+       
+        /// <summary>
+        /// POST: api/v1.0/product
+        /// </summary>
+        /// Create or Update the product
+        /// <param name="request"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<BaseResponseDto<bool>> UpsertProduct(UpsertProductRequest request, CancellationToken ct)
+        public async Task<IActionResult> UpsertProduct(UpsertProductRequest request, CancellationToken ct)
         {
-            return await _mediator.Send(request, ct);
+            var query = await _mediator.Send(request, ct);
+            if (query.Data == false)            
+                return Error("Product could  not update or inserted", null, query);
+            return Success("Product is update or inserted", null, query);
+
         }
 
         // PUT: api/Product/5
@@ -54,12 +83,22 @@ namespace Sample.Api.Controllers
         {
         }
 
-        // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// GET: api/v1.0/product/findbyname/{productName}
+        /// </summary>
+        /// Get product by productname
+        /// <param name="productName"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("findbyname/{productName}")]
-        public async Task<BaseResponseDto<Sample.Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>> GetProductByName(string productName)
+        [ProducesResponseType(typeof(BaseResponseDto<Sample.Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>), 200)]
+        public async Task<IActionResult> GetProductByName(string productName)
         {
-            return await _mediator.Send(new GetProductByNameRequest(productName));
+            var query = await _mediator.Send(new GetProductByNameRequest(productName));
+            if (query.Data == null)
+                return NotFound<object>("Products does not exist", null, null);
+            return Success("Searched Product", null, query);
+
         }
     }
 }
