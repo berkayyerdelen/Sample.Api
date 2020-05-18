@@ -54,7 +54,7 @@ namespace Sample.Api.Controllers
         [HttpDelete]       
         public async Task<IActionResult> DeleteProduct(DeleteProductRequest request, CancellationToken ct)
         {
-            var query = await _mediator.Send(request, ct);
+            var query = await _mediator.Send(request, ct).ConfigureAwait(false); ;
             if (query.Data == false)
                 return Error("Product could could not deleted",null,query);
             return Success("Product is deleted", null, query);
@@ -70,7 +70,7 @@ namespace Sample.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> UpsertProduct(UpsertProductRequest request, CancellationToken ct)
         {
-            var query = await _mediator.Send(request, ct);
+            var query = await _mediator.Send(request, ct).ConfigureAwait(false);
             if (query.Data == false)            
                 return Error("Product could  not update or inserted", null, query);
             return Success("Product is update or inserted", null, query);
@@ -94,7 +94,7 @@ namespace Sample.Api.Controllers
         [ProducesResponseType(typeof(BaseResponseDto<Sample.Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>), 200)]
         public async Task<IActionResult> GetProductByName(string productName)
         {
-            var query = await _mediator.Send(new GetProductByNameRequest(productName));
+            var query = await _mediator.Send(new GetProductByNameRequest(productName)).ConfigureAwait(false); ;
             if (query.Data == null)
                 return NotFound<object>("Products does not exist", null, null);
             return Success("Searched Product", null, query);
