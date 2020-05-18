@@ -34,7 +34,7 @@ namespace Sample.Core.Domain.Product.Queries.GetProducts
             try
             {
                 var source = await _context.Set<Sample.Domain.Product>().Select(x => _mapper.Map<ProductDto>(x))
-                    .ToListAsync(cancellationToken);
+                    .AsNoTracking().ToListAsync(cancellationToken);
                 response.Data = source;
                 response.Total = source.Count();
 

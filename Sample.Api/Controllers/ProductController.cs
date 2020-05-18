@@ -54,7 +54,7 @@ namespace Sample.Api.Controllers
         [HttpDelete]       
         public async Task<IActionResult> DeleteProduct(DeleteProductRequest request, CancellationToken ct)
         {
-            var query = await _mediator.Send(request, ct).ConfigureAwait(false); ;
+            var query = await _mediator.Send(request, ct).ConfigureAwait(false);
             if (query.Data == false)
                 return Error("Product could could not deleted",null,query);
             return Success("Product is deleted", null, query);
