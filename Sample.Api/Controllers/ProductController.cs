@@ -15,8 +15,9 @@ using Sample.Core.Domain.Product.Queries.GetProducts.Dto;
 
 namespace Sample.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0", Deprecated = false)]
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;

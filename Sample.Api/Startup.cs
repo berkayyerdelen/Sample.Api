@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,6 +55,21 @@ namespace Sample.Api
             services.AddMediatR(typeof(DeleteProductRequestHandler));
             services.AddMediatR(typeof(UpsertProductRequestHandler));
             services.AddMediatR(typeof(GetProductByNameRequestHandler));
+
+            services.AddApiVersioning(config =>
+            {
+                // Specify the default API Version
+                config.DefaultApiVersion = new ApiVersion(1, 0);
+                // If the client hasn't specified the API version in the request, use the default API version number 
+                config.AssumeDefaultVersionWhenUnspecified = true;
+                // Advertise the API versions supported for the particular endpoint
+                config.ReportApiVersions = true;
+                // Versioning using media type
+                //config.ApiVersionReader = new MediaTypeApiVersionReader("v");
+                // Supporting multiple versioning scheme
+                //config.ApiVersionReader = ApiVersionReader.Combine(new HeaderApiVersionReader("X-version"), new QueryStringApiVersionReader("api-version"));
+            });
+
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
