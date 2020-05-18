@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sample.Api.Controllers.Base.v1;
 using Sample.Core.Common.BaseDto;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
 using Sample.Core.Domain.Product.Commands.UpsertProduct;
@@ -15,10 +16,10 @@ using Sample.Core.Domain.Product.Queries.GetProducts.Dto;
 
 namespace Sample.Api.Controllers
 {
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
+    
+    
     [ApiVersion("1.0", Deprecated = false)]
-    public class ProductController : ControllerBase
+    public class ProductController : Basev1ApiController
     {
         private readonly IMediator _mediator;
 
