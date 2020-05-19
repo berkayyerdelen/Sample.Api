@@ -4,11 +4,10 @@ using Sample.Domain;
 
 namespace Sample.Infrastructure
 {
-    public class ApplicationContext: DbContext,IApplicationDbContext
+    public class ApplicationContext : DbContext, IApplicationDbContext
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> options): base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            
         }
 
         public DbSet<Product> Products { get; set; }

@@ -16,20 +16,22 @@ namespace Sample.Core.Domain.Product.Queries.GetProducts
     public class GetProductsRequestHandler : IRequestHandler<GetProductsRequest, BaseResponseDto<List<ProductDto>>>
     {
         private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
         private readonly ILogger<GetProductsRequestHandler> _logger;
+        private readonly IMapper _mapper;
 
 
-        public GetProductsRequestHandler(IApplicationDbContext context, IMapper mapper, ILogger<GetProductsRequestHandler> logger)
+        public GetProductsRequestHandler(IApplicationDbContext context, IMapper mapper,
+            ILogger<GetProductsRequestHandler> logger)
         {
-
             _context = context;
             _mapper = mapper;
             _logger = logger;
         }
-        public async Task<BaseResponseDto<List<ProductDto>>> Handle(GetProductsRequest request, CancellationToken cancellationToken)
+
+        public async Task<BaseResponseDto<List<ProductDto>>> Handle(GetProductsRequest request,
+            CancellationToken cancellationToken)
         {
-            BaseResponseDto<List<ProductDto>> response = new BaseResponseDto<List<ProductDto>>();
+            var response = new BaseResponseDto<List<ProductDto>>();
 
             try
             {
@@ -37,18 +39,14 @@ namespace Sample.Core.Domain.Product.Queries.GetProducts
                     .AsNoTracking().ToListAsync(cancellationToken);
                 response.Data = source;
                 response.Total = source.Count();
-
             }
             catch (Exception e)
             {
-                
-                _logger.LogError(e,e.Message);
+                _logger.LogError(e, e.Message);
                 response.Errors.Add("An error occurred while processing your request");
-
             }
 
             return response;
-
         }
     }
 }

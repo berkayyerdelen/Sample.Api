@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,32 +14,33 @@ namespace Sample.Core.Domain.Product.Queries.GetProductByName
     public class GetProductByNameRequestHandler : IRequestHandler<GetProductByNameRequest, BaseResponseDto<ProductDto>>
     {
         private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
         private readonly ILogger<GetProductByNameRequestHandler> _logger;
+        private readonly IMapper _mapper;
 
-        public GetProductByNameRequestHandler(IMapper mapper, IApplicationDbContext context, ILogger<GetProductByNameRequestHandler> logger)
+        public GetProductByNameRequestHandler(IMapper mapper, IApplicationDbContext context,
+            ILogger<GetProductByNameRequestHandler> logger)
         {
             _mapper = mapper;
             _context = context;
             _logger = logger;
         }
-        public async Task<BaseResponseDto<ProductDto>> Handle(GetProductByNameRequest request, CancellationToken cancellationToken)
+
+        public async Task<BaseResponseDto<ProductDto>> Handle(GetProductByNameRequest request,
+            CancellationToken cancellationToken)
         {
-            BaseResponseDto<ProductDto> response = new BaseResponseDto<ProductDto>();
+            var response = new BaseResponseDto<ProductDto>();
             try
             {
-                var source =await _context.Set<Sample.Domain.Product>()
-                    .FirstOrDefaultAsync(x => x.Name == request.ProductName,cancellationToken);
-                
+                var source = await _context.Set<Sample.Domain.Product>()
+                    .FirstOrDefaultAsync(x => x.Name == request.ProductName, cancellationToken);
+
                 var productDto = _mapper.Map<ProductDto>(source);
 
                 response.Data = productDto;
-
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-
             }
 
             return response;

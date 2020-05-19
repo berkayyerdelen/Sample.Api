@@ -2,7 +2,7 @@
 
 namespace Sample.Core.Domain.Product.Commands.UpsertProduct.Validator
 {
-    public class UpsertProductValidator: AbstractValidator<UpsertProductRequest>
+    public class UpsertProductValidator : AbstractValidator<UpsertProductRequest>
     {
         public UpsertProductValidator()
         {

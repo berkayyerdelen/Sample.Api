@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Sample.Core.Domain.Product.Queries.GetProductByName.Validator
 {
-    public class GetProductByNameValidator: AbstractValidator<GetProductByNameRequest>
+    public class GetProductByNameValidator : AbstractValidator<GetProductByNameRequest>
     {
         public GetProductByNameValidator()
         {

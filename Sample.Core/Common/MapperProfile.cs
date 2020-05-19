@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using Sample.Core.Domain.Product.Queries.GetProducts.Dto;
 using Sample.Domain;
 
@@ -15,7 +12,7 @@ namespace Sample.Core.Common
 
             CreateMap<Product, ProductDto>();
 
-            CreateMap<Product, Sample.Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>();
+            CreateMap<Product, Domain.Product.Queries.GetProductByName.Dto.ProductDto>();
         }
     }
 }

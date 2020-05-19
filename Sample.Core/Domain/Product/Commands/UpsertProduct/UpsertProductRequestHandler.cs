@@ -7,22 +7,24 @@ using Microsoft.Extensions.Logging;
 using Sample.Core.Common;
 using Sample.Core.Common.BaseDto;
 
-
 namespace Sample.Core.Domain.Product.Commands.UpsertProduct
 {
-    public class UpsertProductRequestHandler:IRequestHandler<UpsertProductRequest,BaseResponseDto<bool>>
+    public class UpsertProductRequestHandler : IRequestHandler<UpsertProductRequest, BaseResponseDto<bool>>
     {
-        private  readonly IMapper _mapper;
-        private  readonly IApplicationDbContext _context;
-        private  readonly ILogger<UpsertProductRequestHandler> _logger;
+        private readonly IApplicationDbContext _context;
+        private readonly ILogger<UpsertProductRequestHandler> _logger;
+        private readonly IMapper _mapper;
 
-        public UpsertProductRequestHandler(IMapper mapper, IApplicationDbContext context, ILogger<UpsertProductRequestHandler> logger)
+        public UpsertProductRequestHandler(IMapper mapper, IApplicationDbContext context,
+            ILogger<UpsertProductRequestHandler> logger)
         {
             _mapper = mapper;
             _context = context;
             _logger = logger;
         }
-        public async Task<BaseResponseDto<bool>> Handle(UpsertProductRequest request, CancellationToken cancellationToken)
+
+        public async Task<BaseResponseDto<bool>> Handle(UpsertProductRequest request,
+            CancellationToken cancellationToken)
         {
             var response = new BaseResponseDto<bool>();
             var product = _mapper.Map<Sample.Domain.Product>(request);
@@ -38,7 +40,7 @@ namespace Sample.Core.Domain.Product.Commands.UpsertProduct
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex,ex.Message);
+                _logger.LogError(ex, ex.Message);
                 response.Data = false;
             }
 

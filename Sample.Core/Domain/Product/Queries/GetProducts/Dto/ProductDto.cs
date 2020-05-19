@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sample.Core.Domain.Product.Queries.GetProducts.Dto
 {

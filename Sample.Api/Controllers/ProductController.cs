@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sample.Api.Controllers.Base.v1;
@@ -20,16 +17,17 @@ namespace Sample.Api.Controllers
     [ApiVersion("1.0", Deprecated = false)]
     public class ProductController : Basev1ApiController
     {
-        private readonly IMediator _mediator;
         private readonly ILogger<ProductController> _logger;
+        private readonly IMediator _mediator;
 
         public ProductController(IMediator mediator, ILogger<ProductController> logger)
         {
             _mediator = mediator;
             _logger = logger;
         }
+
         /// <summary>
-        /// GET: api/v1.0/product
+        ///     GET: api/v1.0/product
         /// </summary>
         /// Get product list
         /// <param name="ct"></param>
@@ -43,21 +41,21 @@ namespace Sample.Api.Controllers
         }
 
         /// <summary>
-        /// Delete: api/v1.0/product
+        ///     Delete: api/v1.0/product
         /// </summary>
         /// Delete product by id
         /// <param name="request"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        [HttpDelete]       
+        [HttpDelete]
         public async Task<IActionResult> DeleteProduct(DeleteProductRequest request, CancellationToken ct)
         {
             var query = await _mediator.Send(request, ct).ConfigureAwait(false);
             return Ok(query);
         }
-       
+
         /// <summary>
-        /// POST: api/v1.0/product
+        ///     POST: api/v1.0/product
         /// </summary>
         /// Create or Update the product
         /// <param name="request"></param>
@@ -68,7 +66,6 @@ namespace Sample.Api.Controllers
         {
             var query = await _mediator.Send(request, ct).ConfigureAwait(false);
             return Ok(query);
-
         }
 
         // PUT: api/Product/5
@@ -78,19 +75,19 @@ namespace Sample.Api.Controllers
         }
 
         /// <summary>
-        /// GET: api/v1.0/product/findbyname/{productName}
+        ///     GET: api/v1.0/product/findbyname/{productName}
         /// </summary>
         /// Get product by productname
         /// <param name="productName"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("findbyname/{productName}")]
-        [ProducesResponseType(typeof(BaseResponseDto<Sample.Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>), 200)]
+        [ProducesResponseType(typeof(BaseResponseDto<Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>),
+            200)]
         public async Task<IActionResult> GetProductByName(string productName)
         {
-            var query = await _mediator.Send(new GetProductByNameRequest(productName)).ConfigureAwait(false); ;
+            var query = await _mediator.Send(new GetProductByNameRequest(productName)).ConfigureAwait(false);
             return Ok(query);
-
         }
     }
 }

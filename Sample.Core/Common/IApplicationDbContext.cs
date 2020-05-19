@@ -8,6 +8,5 @@ namespace Sample.Core.Common
     {
         DbSet<T> Set<T>() where T : class;
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-
     }
 }

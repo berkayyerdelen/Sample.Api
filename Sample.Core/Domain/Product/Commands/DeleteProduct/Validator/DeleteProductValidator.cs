@@ -2,7 +2,7 @@
 
 namespace Sample.Core.Domain.Product.Commands.DeleteProduct.Validator
 {
-    public class DeleteProductValidator: AbstractValidator<DeleteProductRequest>
+    public class DeleteProductValidator : AbstractValidator<DeleteProductRequest>
     {
         public DeleteProductValidator()
         {
