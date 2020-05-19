@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Sample.Api.Controllers.Base.v1;
 using Sample.Core.Common.BaseDto;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
@@ -20,10 +21,12 @@ namespace Sample.Api.Controllers
     public class ProductController : Basev1ApiController
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(IMediator mediator)
+        public ProductController(IMediator mediator, ILogger<ProductController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
         /// <summary>
         /// GET: api/v1.0/product
@@ -34,8 +37,10 @@ namespace Sample.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(BaseResponseDto<List<ProductDto>>), 200)]
         public async Task<IActionResult> Get(CancellationToken ct)
-        {           
-                var query = await _mediator.Send(new GetProductsRequest(), ct).ConfigureAwait(false);
+        {
+            _logger.LogInformation("Start : Getting item details for {ID}");
+
+            var query = await _mediator.Send(new GetProductsRequest(), ct).ConfigureAwait(false);
                 return Ok(query);
         }
 
