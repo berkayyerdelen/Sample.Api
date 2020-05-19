@@ -38,10 +38,8 @@ namespace Sample.Api.Controllers
         [ProducesResponseType(typeof(BaseResponseDto<List<ProductDto>>), 200)]
         public async Task<IActionResult> Get(CancellationToken ct)
         {
-            _logger.LogInformation("Start : Getting item details for {ID}");
-
             var query = await _mediator.Send(new GetProductsRequest(), ct).ConfigureAwait(false);
-                return Ok(query);
+            return Ok(query);
         }
 
         /// <summary>
