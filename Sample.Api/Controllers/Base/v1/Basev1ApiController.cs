@@ -9,7 +9,7 @@ namespace Sample.Api.Controllers.Base.v1
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     
-    public class Basev1ApiController : BaseApiController
+    public class Basev1ApiController : ControllerBase
     {
     }
 }
