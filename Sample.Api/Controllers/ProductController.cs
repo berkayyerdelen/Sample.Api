@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sample.Api.Controllers.Base.v1;
@@ -27,13 +28,14 @@ namespace Sample.Api.Controllers
         }
 
         /// <summary>
-        ///     GET: api/v1.0/product
+        /// GET: api/v1.0/product
         /// </summary>
         /// Get product list
         /// <param name="ct"></param>
         /// <returns></returns>
         [HttpGet]
-        [ProducesResponseType(typeof(BaseResponseDto<List<ProductDto>>), 200)]
+        [ProducesResponseType(typeof(BaseResponseDto<Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>),
+            StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(CancellationToken ct)
         {
             var query = await _mediator.Send(new GetProductsRequest(), ct).ConfigureAwait(false);
@@ -41,13 +43,15 @@ namespace Sample.Api.Controllers
         }
 
         /// <summary>
-        ///     Delete: api/v1.0/product
+        /// Delete: api/v1.0/product
         /// </summary>
         /// Delete product by id
         /// <param name="request"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
         [HttpDelete]
+        [ProducesResponseType(typeof(BaseResponseDto<bool>),
+            (StatusCodes.Status204NoContent))]
         public async Task<IActionResult> DeleteProduct(DeleteProductRequest request, CancellationToken ct)
         {
             var query = await _mediator.Send(request, ct).ConfigureAwait(false);
@@ -55,13 +59,17 @@ namespace Sample.Api.Controllers
         }
 
         /// <summary>
-        ///     POST: api/v1.0/product
+        /// POST: api/v1.0/product
         /// </summary>
         /// Create or Update the product
         /// <param name="request"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
         [HttpPost]
+        [ProducesResponseType(typeof(BaseResponseDto<bool>),
+            (StatusCodes.Status201Created))]
+        [ProducesResponseType(typeof(BaseResponseDto<bool>),
+            (StatusCodes.Status200OK))]
         public async Task<IActionResult> UpsertProduct(UpsertProductRequest request, CancellationToken ct)
         {
             var query = await _mediator.Send(request, ct).ConfigureAwait(false);
@@ -75,7 +83,7 @@ namespace Sample.Api.Controllers
         }
 
         /// <summary>
-        ///     GET: api/v1.0/product/findbyname/{productName}
+        /// GET: api/v1.0/product/findbyname/{productName}
         /// </summary>
         /// Get product by productname
         /// <param name="productName"></param>
@@ -83,7 +91,7 @@ namespace Sample.Api.Controllers
         [HttpGet]
         [Route("findbyname/{productName}")]
         [ProducesResponseType(typeof(BaseResponseDto<Core.Domain.Product.Queries.GetProductByName.Dto.ProductDto>),
-            200)]
+            StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductByName(string productName)
         {
             var query = await _mediator.Send(new GetProductByNameRequest(productName)).ConfigureAwait(false);

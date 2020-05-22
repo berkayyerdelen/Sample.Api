@@ -31,9 +31,9 @@ namespace Sample.Core.Domain.Product.Commands.UpsertProduct
             try
             {
                 if (!product.Id.Equals(0))
-                    _context.Set<Sample.Domain.Product>().Update(product);
+                    await UpdateProduct(product, cancellationToken);
                 else
-                    await _context.Set<Sample.Domain.Product>().AddAsync(product, cancellationToken);
+                    await InsertProduct(product, cancellationToken);
 
                 response.Data = true;
                 await _context.SaveChangesAsync(cancellationToken);
@@ -46,5 +46,15 @@ namespace Sample.Core.Domain.Product.Commands.UpsertProduct
 
             return response;
         }
+        private async Task UpdateProduct(Sample.Domain.Product product, CancellationToken cancellationToken)
+        {
+            await Task.FromResult(_context.Set<Sample.Domain.Product>().Update(product));
+        }
+        private async Task InsertProduct(Sample.Domain.Product product, CancellationToken cancellationToken)
+        {
+            await _context.Set<Sample.Domain.Product>().AddAsync(product, cancellationToken);
+        }
+
+
     }
 }

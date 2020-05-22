@@ -36,8 +36,8 @@ namespace Sample.Api
             var connectionString = Configuration.GetValue<string>("ConnectionString");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
 
-            services.AddScoped<IApplicationDbContext>(x => x.GetService<ApplicationContext>());
-
+            //services.AddScoped<IApplicationDbContext>(x => x.GetService<ApplicationContext>());
+            services.AddScoped<IApplicationDbContext, ApplicationContext>();           
             services.AddMvc().AddFluentValidation();
 
             services.AddTransient<IValidator<DeleteProductRequest>, DeleteProductValidator>();
