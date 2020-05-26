@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +10,6 @@ using Sample.Core.Domain.Product.Commands.DeleteProduct;
 using Sample.Core.Domain.Product.Commands.UpsertProduct;
 using Sample.Core.Domain.Product.Queries.GetProductByName;
 using Sample.Core.Domain.Product.Queries.GetProducts;
-using Sample.Core.Domain.Product.Queries.GetProducts.Dto;
 
 namespace Sample.Api.Controllers
 {
