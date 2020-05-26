@@ -25,6 +25,12 @@ namespace Sample.Core.Domain.Product.Queries.GetProductByName
             _logger = logger;
         }
 
+        public GetProductByNameRequestHandler(IMapper mapper, IApplicationDbContext context)
+        {
+            _mapper = mapper;
+            _context = context;
+        }
+
         public async Task<BaseResponseDto<ProductDto>> Handle(GetProductByNameRequest request,
             CancellationToken cancellationToken)
         {

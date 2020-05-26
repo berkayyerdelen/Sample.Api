@@ -12,11 +12,14 @@ namespace SampleApi.IntegrationTests.Common
         public static ApplicationContext Create()
         {
             var options = new DbContextOptionsBuilder<ApplicationContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking).Options;
+           
             var context = new ApplicationContext(options);
             context.Database.EnsureCreated();
+            var productList = CreateProductsInMemory();
+            context.Products.AddRange(productList);
 
-            context.Products.AddRange(CreateInMemoryProducts());
+            context.Products.ForEachAsync(l => context.Entry(l).State = EntityState.Modified);
             context.SaveChanges();
 
             return context;
@@ -28,7 +31,7 @@ namespace SampleApi.IntegrationTests.Common
             context.Dispose();
         }
 
-        public static ICollection<Product> CreateInMemoryProducts()
+        public static ICollection<Product> CreateProductsInMemory()
         => new List<Product>()
         {
             new Product()

@@ -16,7 +16,6 @@ namespace Sample.Core.Domain.Product.Queries.GetProducts
     public class GetProductsRequestHandler : IRequestHandler<GetProductsRequest, BaseResponseDto<List<ProductDto>>>
     {
         private readonly IApplicationDbContext _context;
-        private readonly ILogger<GetProductsRequestHandler> _logger;
         private readonly IMapper _mapper;
 
 
@@ -36,13 +35,13 @@ namespace Sample.Core.Domain.Product.Queries.GetProducts
             try
             {
                 var source = await _context.Set<Sample.Domain.Product>().Select(x => _mapper.Map<ProductDto>(x))
-                    .AsNoTracking().ToListAsync(cancellationToken);
+                    .AsNoTracking().ToListAsync(cancellationToken).ConfigureAwait(false);
                 response.Data = source;
                 response.Total = source.Count();
+                
             }
             catch (Exception e)
             {
-                _logger.LogError(e, e.Message);
                 response.Errors.Add("An error occurred while processing your request");
             }
 

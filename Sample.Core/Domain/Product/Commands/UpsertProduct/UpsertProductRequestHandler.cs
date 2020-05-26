@@ -12,15 +12,14 @@ namespace Sample.Core.Domain.Product.Commands.UpsertProduct
     public class UpsertProductRequestHandler : IRequestHandler<UpsertProductRequest, BaseResponseDto<bool>>
     {
         private readonly IApplicationDbContext _context;
-        private readonly ILogger<UpsertProductRequestHandler> _logger;
         private readonly IMapper _mapper;
 
-        public UpsertProductRequestHandler(IMapper mapper, IApplicationDbContext context,
-            ILogger<UpsertProductRequestHandler> logger)
+        public UpsertProductRequestHandler(IMapper mapper, IApplicationDbContext context
+            )
         {
             _mapper = mapper;
             _context = context;
-            _logger = logger;
+            
         }
 
         public async Task<BaseResponseDto<bool>> Handle(UpsertProductRequest request,
@@ -40,7 +39,7 @@ namespace Sample.Core.Domain.Product.Commands.UpsertProduct
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                response.Errors.Add(ex.Message);
                 response.Data = false;
             }
 
