@@ -13,7 +13,8 @@ using Sample.Core.Domain.Product.Queries.GetProducts;
 
 namespace Sample.Api.Controllers
 {
-    [ApiVersion("1.0", Deprecated = false)]
+    [ApiVersion("1.0")]
+    [ApiController]
     public class ProductController : Basev1ApiController
     {
         private readonly ILogger<ProductController> _logger;
