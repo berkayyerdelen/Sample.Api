@@ -20,12 +20,12 @@ namespace Sample.Core.Domain.Product.Queries.GetProducts
         private readonly IMapper _mapper;
 
 
-        public GetProductsRequestHandler(IApplicationDbContext context, IMapper mapper,
-            ILogger<GetProductsRequestHandler> logger)
+        public GetProductsRequestHandler(IApplicationDbContext context, IMapper mapper)
+
         {
             _context = context;
             _mapper = mapper;
-            _logger = logger;
+
         }
 
         public async Task<BaseResponseDto<List<ProductDto>>> Handle(GetProductsRequest request,
