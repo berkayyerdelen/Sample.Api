@@ -45,8 +45,8 @@ namespace SampleApi.IntegrationTests.Domains.Product
             };
             var updateProduct = new UpsertProductRequest()
             {
-                Id = 1,
-                Name = "MSI1",
+                Id = 4,
+                Name = "MSI2",
                 CreatedDate = DateTime.Now
             };
             
@@ -58,9 +58,9 @@ namespace SampleApi.IntegrationTests.Domains.Product
 
             var queryHandler = new GetProductByNameRequestHandler(_mapper, _context);
 
-            var product = queryHandler.Handle(new GetProductByNameRequest("MSI1")
+            var product = queryHandler.Handle(new GetProductByNameRequest("MSI2")
                 , CancellationToken.None);
-            Assert.Equal(1, product.Result.Data.Id);
+            Assert.Equal(4, product.Result.Data.Id);
 
         }
 
