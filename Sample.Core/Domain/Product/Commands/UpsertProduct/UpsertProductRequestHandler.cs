@@ -18,23 +18,27 @@ namespace Sample.Core.Domain.Product.Commands.UpsertProduct
         public UpsertProductRequestHandler(IMapper mapper, IApplicationDbContext context)
         {
             _mapper = mapper;
-            _context = context;           
+            _context = context;
         }
 
         public async Task<BaseResponseDto<bool>> Handle(UpsertProductRequest request,
             CancellationToken cancellationToken)
         {
+
             var response = new BaseResponseDto<bool>();
             var product = _mapper.Map<Sample.Domain.Product>(request);
             try
             {
                 if (!product.Id.Equals(0))
-                    await UpdateProduct(productEntity: product,cancellationToken: cancellationToken);
-                else
-                    await InsertProduct(productEntity: product, cancellationToken);
 
-                response.Data = true;
+                    await UpdateProduct(productEntity: product, cancellationToken: cancellationToken);
+                else
+                    await InsertProduct(productEntity: product, cancellationToken: cancellationToken);
+
+
                 await _context.SaveChangesAsync(cancellationToken);
+                response.Data = true;
+
             }
             catch (Exception ex)
             {
@@ -47,14 +51,15 @@ namespace Sample.Core.Domain.Product.Commands.UpsertProduct
         private async Task UpdateProduct(Sample.Domain.Product productEntity, CancellationToken cancellationToken)
         {
             var product = await _context.Set<Sample.Domain.Product>().FindAsync(productEntity.Id);
-            //var customer = _mapper.Map<UpdateCustomerCommand, Entities.Customer>(request, query);
-            var source = _mapper.Map(product, productEntity);
-            //product.Name = productEntity.Name;
-            //product.CreatedDate = productEntity.CreatedDate;
-            await Task.FromResult(_context.Set<Sample.Domain.Product>().Update(source));
+            //var source = _mapper.Map(productEntity, product);
+
+            product.Name = productEntity.Name;
+            product.CreatedDate = productEntity.CreatedDate;
+            await Task.FromResult(_context.Set<Sample.Domain.Product>().Update(product));
         }
         private async Task InsertProduct(Sample.Domain.Product productEntity, CancellationToken cancellationToken)
         {
+
             await _context.Set<Sample.Domain.Product>().AddAsync(productEntity, cancellationToken);
         }
 

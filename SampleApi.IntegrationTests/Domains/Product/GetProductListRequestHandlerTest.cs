@@ -44,7 +44,7 @@ namespace SampleApi.IntegrationTests.Domains.Product
                 Name = "MSI2"
             };
             var updateProduct = new UpsertProductRequest()
-            {
+            { 
                 Id = 4,
                 Name = "MSI2",
                 CreatedDate = DateTime.Now

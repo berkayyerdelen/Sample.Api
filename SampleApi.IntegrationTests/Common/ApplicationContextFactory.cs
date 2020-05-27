@@ -12,13 +12,12 @@ namespace SampleApi.IntegrationTests.Common
         public static ApplicationContext Create()
         {
             var options = new DbContextOptionsBuilder<ApplicationContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString()).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()).UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll)
                 .EnableSensitiveDataLogging().Options;
-
+            
             var context = new ApplicationContext(options);
             context.Database.EnsureCreated();
-            context.Products.AddRange(CreateProductsInMemory());           
-            context.Products.AsNoTracking();           
+            context.Products.AddRange(CreateProductsInMemory());
             context.SaveChanges();
 
             return context;
