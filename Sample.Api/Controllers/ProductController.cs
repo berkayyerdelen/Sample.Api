@@ -15,17 +15,8 @@ namespace Sample.Api.Controllers
 {
     [ApiVersion("1.0")]
     [ApiController]
-    public class ProductController : Basev1ApiController
+    public class ProductController :Basev1ApiController
     {
-        private readonly ILogger<ProductController> _logger;
-        private readonly IMediator _mediator;
-
-        public ProductController(IMediator mediator, ILogger<ProductController> logger)
-        {
-            _mediator = mediator;
-            _logger = logger;
-        }
-
         /// <summary>
         /// GET: api/v1.0/product
         /// </summary>
@@ -37,7 +28,7 @@ namespace Sample.Api.Controllers
             StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(CancellationToken ct)
         {
-            var query = await _mediator.Send(new GetProductsRequest(), ct).ConfigureAwait(false);
+            var query = await Mediator.Send(new GetProductsRequest(), ct).ConfigureAwait(false);
             return Ok(query);
         }
 
@@ -53,7 +44,7 @@ namespace Sample.Api.Controllers
             (StatusCodes.Status204NoContent))]
         public async Task<IActionResult> DeleteProduct(DeleteProductRequest request, CancellationToken ct)
         {
-            var query = await _mediator.Send(request, ct).ConfigureAwait(false);
+            var query = await Mediator.Send(request, ct).ConfigureAwait(false);
             return Ok(query);
         }
 
@@ -71,7 +62,7 @@ namespace Sample.Api.Controllers
             (StatusCodes.Status200OK))]
         public async Task<IActionResult> UpsertProduct(UpsertProductRequest request, CancellationToken ct)
         {
-            var query = await _mediator.Send(request, ct).ConfigureAwait(false);
+            var query = await Mediator.Send(request, ct).ConfigureAwait(false);
             return Ok(query);
         }
 
@@ -93,8 +84,11 @@ namespace Sample.Api.Controllers
             StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductByName(string productName)
         {
-            var query = await _mediator.Send(new GetProductByNameRequest(productName)).ConfigureAwait(false);
+            var query = await Mediator.Send(new GetProductByNameRequest(productName)).ConfigureAwait(false);
             return Ok(query);
         }
+
+
+      
     }
 }
