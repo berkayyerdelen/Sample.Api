@@ -13,5 +13,8 @@ namespace Sample.Api.Controllers.Base.v1
         private ILogger<T> logger;
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
         protected ILogger<T> Logger => logger ?? HttpContext.RequestServices.GetService<ILogger<T>>();
+
+
+        //precoty precoja84
     }
 }

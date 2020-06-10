@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Sample.Api.Infrastructure.Swagger;
 using Sample.Core.Common;
+using Sample.Core.Common.BaseLogger;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
 using Sample.Core.Domain.Product.Commands.DeleteProduct.Validator;
 using Sample.Core.Domain.Product.Commands.UpsertProduct;
@@ -43,7 +44,6 @@ namespace Sample.Api
         {
             var connectionString = Configuration.GetValue<string>("ConnectionString");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
-
             //services.AddScoped<IApplicationDbContext>(x => x.GetService<ApplicationContext>());
             services.AddScoped<IApplicationDbContext, ApplicationContext>();           
             services.AddMvc().AddFluentValidation();
@@ -51,7 +51,7 @@ namespace Sample.Api
             services.AddTransient<IValidator<DeleteProductRequest>, DeleteProductValidator>();
             services.AddTransient<IValidator<UpsertProductRequest>, UpsertProductValidator>();
             services.AddTransient<IValidator<GetProductByNameRequest>, GetProductByNameValidator>();
-
+            
             services.AddMediatR(typeof(GetProductsRequestHandler));
             services.AddMediatR(typeof(DeleteProductRequestHandler));
             services.AddMediatR(typeof(UpsertProductRequestHandler));
