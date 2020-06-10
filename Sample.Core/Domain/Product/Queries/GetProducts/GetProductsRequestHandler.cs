@@ -14,7 +14,7 @@ using Sample.Core.Domain.Product.Queries.GetProducts.Dto;
 
 namespace Sample.Core.Domain.Product.Queries.GetProducts
 {
-    public class GetProductsRequestHandler : BaseILogger<GetProductsRequestHandler>,IRequestHandler<GetProductsRequest, BaseResponseDto<List<ProductDto>>>
+    public class GetProductsRequestHandler : BaseLogger<GetProductsRequestHandler>,IRequestHandler<GetProductsRequest, BaseResponseDto<List<ProductDto>>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -28,7 +28,7 @@ namespace Sample.Core.Domain.Product.Queries.GetProducts
             CancellationToken cancellationToken)
         {
             var response = new BaseResponseDto<List<ProductDto>>();
-            Logger.LogInformation("Hey hey hey");
+            Logger.LogWarning("handler mate");
             try
             {
                 var source = await _context.Set<Sample.Domain.Product>().Select(x => _mapper.Map<ProductDto>(x))

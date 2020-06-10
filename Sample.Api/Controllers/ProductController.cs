@@ -17,7 +17,6 @@ namespace Sample.Api.Controllers
     [ApiController]
     public class ProductController :Basev1ApiController<ProductController>
     {
-       
         /// <summary>
         /// GET: api/v1.0/product
         /// </summary>
@@ -29,7 +28,7 @@ namespace Sample.Api.Controllers
             StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(CancellationToken ct)
         {
-            Logger.LogWarning("test");
+            Logger.LogWarning("Controller 1");
             var query = await Mediator.Send(new GetProductsRequest(), ct).ConfigureAwait(false);
             return Ok(query);
         }

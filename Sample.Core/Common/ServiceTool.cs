@@ -3,15 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Sample.Core.Common
 {
-    public  class ServiceTool
+    public static class ServiceTool
     {
-        public  IServiceProvider ServiceProvider { get; set; }
+        public static IServiceProvider ServiceProvider { get; set; }
 
-        public IServiceProvider CreateService(IServiceCollection serviceCollection, IServiceProvider serviceProvider)
+        public static void CreateService(IServiceCollection serviceCollection)
         {
-            ServiceProvider = serviceProvider;
             ServiceProvider = serviceCollection.BuildServiceProvider();
-            return ServiceProvider;
         }
     }
 }
