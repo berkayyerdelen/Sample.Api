@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using AutoMapper;
@@ -6,6 +7,7 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -17,7 +19,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Sample.Api.Infrastructure.Swagger;
 using Sample.Core.Common;
-using Sample.Core.Common.BaseLogger;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
 using Sample.Core.Domain.Product.Commands.DeleteProduct.Validator;
 using Sample.Core.Domain.Product.Commands.UpsertProduct;
@@ -26,6 +27,10 @@ using Sample.Core.Domain.Product.Queries.GetProductByName;
 using Sample.Core.Domain.Product.Queries.GetProductByName.Validator;
 using Sample.Core.Domain.Product.Queries.GetProducts;
 using Sample.Infrastructure;
+using Sample.Infrastructure.Identity;
+using Sample.Infrastructure.Identity.Domain.Commands.SignUp;
+using Sample.Infrastructure.Identity.Domain.Commands.SignUp.Validator;
+using Sample.Infrastructure.Identity.Mapper;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Sample.Api
@@ -44,18 +49,31 @@ namespace Sample.Api
         {
             var connectionString = Configuration.GetValue<string>("ConnectionString");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
-            //services.AddScoped<IApplicationDbContext>(x => x.GetService<ApplicationContext>());
-            services.AddScoped<IApplicationDbContext, ApplicationContext>();           
+            services.AddIdentity<User, Role>(options =>
+                    {
+                        options.Password.RequiredLength = 8;
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireUppercase = true;
+                        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1d);
+                        options.Lockout.MaxFailedAccessAttempts = 5;
+                        options.User.RequireUniqueEmail = true;
+                    }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+            services.AddScoped<IApplicationDbContext, ApplicationContext>();
             services.AddMvc().AddFluentValidation();
 
             services.AddTransient<IValidator<DeleteProductRequest>, DeleteProductValidator>();
             services.AddTransient<IValidator<UpsertProductRequest>, UpsertProductValidator>();
             services.AddTransient<IValidator<GetProductByNameRequest>, GetProductByNameValidator>();
-            
+            services.AddTransient<IValidator<SignUpRequest>, SignUpValidator>();
+
+
             services.AddMediatR(typeof(GetProductsRequestHandler));
             services.AddMediatR(typeof(DeleteProductRequestHandler));
             services.AddMediatR(typeof(UpsertProductRequestHandler));
             services.AddMediatR(typeof(GetProductByNameRequestHandler));
+            services.AddMediatR(typeof(SignUpRequestHandler));
+
+
 
             services.AddApiVersioning(o =>
             {
@@ -90,7 +108,11 @@ namespace Sample.Api
                 });
 
 
-            var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new MapperProfile()); });
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MapperProfile());
+                mc.AddProfile(new IdentityMapperProfile());
+            });
 
             var mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -101,7 +123,7 @@ namespace Sample.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
-           
+
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
