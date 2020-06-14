@@ -28,8 +28,10 @@ using Sample.Core.Domain.Product.Queries.GetProductByName.Validator;
 using Sample.Core.Domain.Product.Queries.GetProducts;
 using Sample.Infrastructure;
 using Sample.Infrastructure.Identity;
+using Sample.Infrastructure.Identity.Domain.Commands.AddUserToRole;
 using Sample.Infrastructure.Identity.Domain.Commands.SignUp;
 using Sample.Infrastructure.Identity.Domain.Commands.SignUp.Validator;
+using Sample.Infrastructure.Identity.Domain.Queries.SignIn;
 using Sample.Infrastructure.Identity.Mapper;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -72,6 +74,8 @@ namespace Sample.Api
             services.AddMediatR(typeof(UpsertProductRequestHandler));
             services.AddMediatR(typeof(GetProductByNameRequestHandler));
             services.AddMediatR(typeof(SignUpRequestHandler));
+            services.AddMediatR(typeof(SignInRequestHandler));
+            services.AddMediatR(typeof(AddUserToRoleRequestHandler));
 
 
 
