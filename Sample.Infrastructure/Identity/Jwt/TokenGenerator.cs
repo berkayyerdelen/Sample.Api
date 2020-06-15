@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Sample.Infrastructure.Identity.Jwt
@@ -12,9 +13,9 @@ namespace Sample.Infrastructure.Identity.Jwt
     {
         public readonly JwtSettings JwtSettings;
 
-        public TokenGenerator(JwtSettings jwtSettings)
+        public TokenGenerator(IOptionsSnapshot<JwtSettings> jwtSettings)
         {
-            JwtSettings= jwtSettings;
+            JwtSettings= jwtSettings.Value;
         }
         public string GenerateJwt(User user, IList<string> roles)
         {

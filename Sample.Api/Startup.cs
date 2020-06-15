@@ -55,8 +55,7 @@ namespace Sample.Api
             var connectionString = Configuration.GetValue<string>("ConnectionString");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
             
-            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
-            var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
+            
 
             services.AddIdentity<User, Role>(options =>
                     {
@@ -67,10 +66,12 @@ namespace Sample.Api
                         options.Lockout.MaxFailedAccessAttempts = 5;
                         options.User.RequireUniqueEmail = true;
                     }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+
             services.AddScoped<IApplicationDbContext, ApplicationContext>();
             services.AddMvc().AddFluentValidation();
 
-            services.AddScoped(typeof(JwtSettings));
+            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+            var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();
             
             services.AddTransient<IValidator<DeleteProductRequest>, DeleteProductValidator>();
