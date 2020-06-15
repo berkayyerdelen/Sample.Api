@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
+using Sample.Api.Infrastructure.Jwt;
 using Sample.Api.Infrastructure.Swagger;
 using Sample.Core.Common;
 using Sample.Core.Domain.Product.Commands.DeleteProduct;
@@ -32,6 +33,7 @@ using Sample.Infrastructure.Identity.Domain.Commands.AddUserToRole;
 using Sample.Infrastructure.Identity.Domain.Commands.SignUp;
 using Sample.Infrastructure.Identity.Domain.Commands.SignUp.Validator;
 using Sample.Infrastructure.Identity.Domain.Queries.SignIn;
+using Sample.Infrastructure.Identity.Jwt;
 using Sample.Infrastructure.Identity.Mapper;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -49,8 +51,13 @@ namespace Sample.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             var connectionString = Configuration.GetValue<string>("ConnectionString");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
+            
+            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+            var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
+
             services.AddIdentity<User, Role>(options =>
                     {
                         options.Password.RequiredLength = 8;
@@ -63,11 +70,13 @@ namespace Sample.Api
             services.AddScoped<IApplicationDbContext, ApplicationContext>();
             services.AddMvc().AddFluentValidation();
 
+            services.AddScoped(typeof(JwtSettings));
+            services.AddTransient<ITokenGenerator, TokenGenerator>();
+            
             services.AddTransient<IValidator<DeleteProductRequest>, DeleteProductValidator>();
             services.AddTransient<IValidator<UpsertProductRequest>, UpsertProductValidator>();
             services.AddTransient<IValidator<GetProductByNameRequest>, GetProductByNameValidator>();
             services.AddTransient<IValidator<SignUpRequest>, SignUpValidator>();
-
 
             services.AddMediatR(typeof(GetProductsRequestHandler));
             services.AddMediatR(typeof(DeleteProductRequestHandler));
@@ -77,7 +86,7 @@ namespace Sample.Api
             services.AddMediatR(typeof(SignInRequestHandler));
             services.AddMediatR(typeof(AddUserToRoleRequestHandler));
 
-
+            
 
             services.AddApiVersioning(o =>
             {
@@ -122,6 +131,7 @@ namespace Sample.Api
             services.AddSingleton(mapper);
             services.AddControllers();
             ServiceTool.CreateService(services);
+            services.AddAuth(jwtSettings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

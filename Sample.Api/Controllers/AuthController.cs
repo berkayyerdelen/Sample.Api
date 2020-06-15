@@ -10,6 +10,7 @@ using Sample.Api.Controllers.Base.v1;
 using Sample.Infrastructure.Identity;
 using Sample.Infrastructure.Identity.Domain.Commands.AddUserToRole;
 using Sample.Infrastructure.Identity.Domain.Commands.SignUp;
+using Sample.Infrastructure.Identity.Domain.Queries.SignIn;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,7 +27,7 @@ namespace Sample.Api.Controllers
             return Ok(await Mediator.Send(request, ct).ConfigureAwait(false));
         }
         [HttpPost("SignIn")]
-        public async Task<IActionResult> SignIn(SignUpRequest request, CancellationToken ct)
+        public async Task<IActionResult> SignIn(SignInRequest request, CancellationToken ct)
         {
             return Ok(await Mediator.Send(request, ct).ConfigureAwait(false));
         }
