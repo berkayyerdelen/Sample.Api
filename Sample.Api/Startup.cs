@@ -32,6 +32,8 @@ using Sample.Infrastructure.Identity;
 using Sample.Infrastructure.Identity.Domain.Commands.AddUserToRole;
 using Sample.Infrastructure.Identity.Domain.Commands.SignUp;
 using Sample.Infrastructure.Identity.Domain.Commands.SignUp.Validator;
+using Sample.Infrastructure.Identity.Domain.Commands.UpdatePassword;
+using Sample.Infrastructure.Identity.Domain.Queries.ForgetPassword;
 using Sample.Infrastructure.Identity.Domain.Queries.SignIn;
 using Sample.Infrastructure.Identity.Jwt;
 using Sample.Infrastructure.Identity.Mapper;
@@ -86,7 +88,8 @@ namespace Sample.Api
             services.AddMediatR(typeof(SignUpRequestHandler));
             services.AddMediatR(typeof(SignInRequestHandler));
             services.AddMediatR(typeof(AddUserToRoleRequestHandler));
-
+            services.AddMediatR(typeof(ForgetPasswordRequestHandler));
+            services.AddMediatR(typeof(UpdatePasswordRequestHandler));
             
 
             services.AddApiVersioning(o =>
