@@ -41,7 +41,7 @@ namespace Sample.Infrastructure.Identity.Domain.Queries.ForgetPassword
                 };
 
                 SmtpClient smp = new SmtpClient();
-                smp.Credentials = new NetworkCredential("lejyonerarkantos@gmail.com", "lejyoner+9");
+                smp.Credentials = new NetworkCredential("******", "*****");
                 smp.Port = 587;
                 smp.Host = "smtp.gmail.com";
                 smp.EnableSsl = true;
