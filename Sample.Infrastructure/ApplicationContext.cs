@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Sample.Core.Common;
 using Sample.Domain;
 using Sample.Infrastructure.Identity;
