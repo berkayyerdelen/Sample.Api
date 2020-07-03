@@ -59,18 +59,18 @@ namespace Sample.Api
             
             var connectionString = Configuration.GetValue<string>("ConnectionString");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
-            
-            
+
+
 
             services.AddIdentity<User, Role>(options =>
-                    {
-                        options.Password.RequiredLength = 8;
-                        options.Password.RequireNonAlphanumeric = false;
-                        options.Password.RequireUppercase = true;
-                        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1d);
-                        options.Lockout.MaxFailedAccessAttempts = 5;
-                        options.User.RequireUniqueEmail = true;
-                    }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1d);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ApplicationContext>();
 
            
 
@@ -81,19 +81,19 @@ namespace Sample.Api
             var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
-                options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidIssuer = jwtSettings.Issuer,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey =new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
-                    };
-                });
+            //services.AddAuthentication(x=>x.DefaultScheme ="JWT").AddJwtBearer(
+            //    options =>
+            //    {
+            //        options.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidateIssuer = true,
+            //            ValidateAudience = true,
+            //            ValidateLifetime = true,
+            //            ValidIssuer = jwtSettings.Issuer,
+            //            ValidateIssuerSigningKey = true,
+            //            IssuerSigningKey =new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
+            //        };
+            //    });
 
 
             services.AddTransient<IValidator<DeleteProductRequest>, DeleteProductValidator>();
