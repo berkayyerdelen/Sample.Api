@@ -1,10 +1,12 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.IdentityModel.Tokens;
 using Sample.Api.Infrastructure.Jwt;
 using Sample.Api.Infrastructure.Swagger;
 using Sample.Core.Common;
@@ -69,13 +72,30 @@ namespace Sample.Api
                         options.User.RequireUniqueEmail = true;
                     }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
+           
+
             services.AddScoped<IApplicationDbContext, ApplicationContext>();
             services.AddMvc().AddFluentValidation();
 
             services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
             var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
             services.AddTransient<ITokenGenerator, TokenGenerator>();
-            
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+                options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey =new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret))
+                    };
+                });
+
+
             services.AddTransient<IValidator<DeleteProductRequest>, DeleteProductValidator>();
             services.AddTransient<IValidator<UpsertProductRequest>, UpsertProductValidator>();
             services.AddTransient<IValidator<GetProductByNameRequest>, GetProductByNameValidator>();
@@ -147,7 +167,7 @@ namespace Sample.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
