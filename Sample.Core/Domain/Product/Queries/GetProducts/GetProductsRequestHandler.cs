@@ -39,7 +39,7 @@ namespace Sample.Core.Domain.Product.Queries.GetProducts
             }
             catch (Exception e)
             {
-                response.Errors.Add("An error occurred while processing your request");
+                response.Errors.Add($"An error occurred while processing your request {e.StackTrace}");
             }
 
             return response;
