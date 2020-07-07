@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Domain", "Sample.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Infrastructure", "Sample.Infrastructure\Sample.Infrastructure.csproj", "{99F68501-38DC-48B8-80E0-9975AF2A3730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApi.IntegrationTests", "SampleApi.IntegrationTests\SampleApi.IntegrationTests.csproj", "{498B25B5-E1DA-4517-B395-C61D681E6DB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleApi.IntegrationTests", "SampleApi.IntegrationTests\SampleApi.IntegrationTests.csproj", "{498B25B5-E1DA-4517-B395-C61D681E6DB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApi.UniTests", "SampleApi.UniTests\SampleApi.UniTests.csproj", "{851E7755-D641-4759-9FB8-D721149A2118}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{498B25B5-E1DA-4517-B395-C61D681E6DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{498B25B5-E1DA-4517-B395-C61D681E6DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{498B25B5-E1DA-4517-B395-C61D681E6DB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{851E7755-D641-4759-9FB8-D721149A2118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{851E7755-D641-4759-9FB8-D721149A2118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{851E7755-D641-4759-9FB8-D721149A2118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{851E7755-D641-4759-9FB8-D721149A2118}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
