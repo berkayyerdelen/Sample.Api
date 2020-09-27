@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>SampleApi.IntegrationTests</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Test</ProjectType>
+  <ProjectGuid>498b25b5-e1da-4517-b395-c61d681e6db2</ProjectGuid>
+  <FullPath>C:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\SampleApi.IntegrationTests\SampleApi.IntegrationTests.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="C:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\.sonarqube\out\4\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePath">C:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\SampleApi.IntegrationTests\bin\Debug\netcoreapp3.1\SampleApi.IntegrationTests.dll.RoslynCA.json|C:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\SampleApi.IntegrationTests\bin\Debug\netcoreapp3.1\SampleApi.IntegrationTests.dll.RoslynCA.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPath">C:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\.sonarqube\out\4</Property>
+  </AnalysisSettings>
+  <Configuration>Debug</Configuration>
+  <Platform>AnyCPU</Platform>
+  <TargetFramework>netcoreapp3.1</TargetFramework>
+</ProjectInfo>

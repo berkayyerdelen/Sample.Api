@@ -1,0 +1,21 @@
+v
+mC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Common\BaseDto\BaseResponseDto.csutf-8t
+kC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Common\BaseLogger\BaseLogger.csutf-8t
+kC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Common\IApplicationDbContext.csutf-8l
+cC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Common\MapperProfile.csutf-8j
+aC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Common\ServiceTool.csutf-8ì
+âC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Commands\DeleteProduct\DeleteProductRequest.csutf-8ö
+êC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Commands\DeleteProduct\DeleteProductRequestHandler.csutf-8ü
+ïC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Commands\DeleteProduct\Validator\DeleteProductValidator.csutf-8ì
+âC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Commands\UpsertProduct\UpsertProductRequest.csutf-8ö
+êC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Commands\UpsertProduct\UpsertProductRequestHandler.csutf-8ü
+ïC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Commands\UpsertProduct\Validator\UpsertProductValidator.csutf-8è
+ÖC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Queries\GetProductByName\Dto\ProductDto.csutf-8ò
+éC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Queries\GetProductByName\GetProductByNameRequest.csutf-8ü
+ïC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Queries\GetProductByName\GetProductByNameRequestHandler.csutf-8§
+öC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Queries\GetProductByName\Validator\GetProductByNameValidator.csutf-8ä
+ÄC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Queries\GetProducts\Dto\ProductDto.csutf-8é
+ÑC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Queries\GetProducts\GetProductsRequest.csutf-8ï
+ãC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\Domain\Product\Queries\GetProducts\GetProductsRequestHandler.csutf-8†
+îC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\obj\Debug\netstandard2.1\.NETStandard,Version=v2.1.AssemblyAttributes.csutf-8å
+ÄC:\Users\Berkay Yerdelen\source\repos\berkayyerdelen\Sample.Api\Sample.Core\obj\Debug\netstandard2.1\Sample.Core.AssemblyInfo.csutf-8
